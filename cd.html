@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"style.css">
+
+    <style>
+        :root {
+            --Soft-orange: hsl(35, 77%, 62%);
+            --Soft-red: hsl(5, 85%, 63%);
+            --Off-white: hsl(36, 100%, 99%);
+            --Grayish-blue: hsl(233, 8%, 79%);
+            --Dark-grayish-blue: hsl(236, 13%, 42%);
+            --Very-dark-blue: hsl(240, 100%, 5%);
+        }
+
+        /* DEFAULT STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif, 'Inter';
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--Off-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        p {
+            font-size: 15px;
+        }
+
+        li {
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, auto);
+            gap: 30px;
+            grid-template-areas: "nav nav nav" "main main new" "main main new" "top-new top-new top-new";
+        }
+
+        .inactive {
+            display: none;
+        }
+
+        .backdrop {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 35%;
+            backdrop-filter: brightness(40%);
+        }
+
+        /* NAV STYLES */
+        nav {
+            grid-area: nav;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links li {
+            color: var(--Dark-grayish-blue);
+        }
+
+        .nav-links li:hover {
+            color: var(--Soft-red);
+        }
+
+        /* MAIN STYLES */
+        main {
+            grid-area: main;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--Off-white);
+        }
+
+        main picture {
+            height: 60%;
+        }
+
+        .image-web {
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-container {
+            height: 40%;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-title {
+            font-weight: 800;
+            font-size: 45px;
+            line-height: 1;
+            color: var(--Very-dark-blue);
+            width: 50%;
+        }
+
+        .main-info {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .main-text {
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--Dark-grayish-blue);
+        }
+
+        .btn {
+            border-style: none;
+            color: var(--Off-white);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: auto 10px;
+            background: var(--Soft-red);
+            width: 50%;
+            height: 25%;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--Very-dark-blue);
+        }
+
+        /* NEWS STYLES*/
+        .news {
+            grid-area: new;
+            background: var(--Very-dark-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 100%;
+            height: 100%;
+            padding: 30px 20px;
+        }
+
+        .news h2 {
+            font-size: 2rem;
+            color: var(--Soft-orange);
+        }
+
+        .new {
+            padding: 2rem 0;
+        }
+
+        .new:nth-child(3) {
+            border-top: 1px solid var(--Off-white);
+            border-bottom: 1px solid var(--Off-white);
+        }
+
+        .new:nth-child(4) {
+            padding-bottom: 0;
+        }
+
+        .new-title {
+            font-size: 1rem;
+            color: var(--Off-white);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .new-title:hover {
+            color: var(--Soft-orange);
+        }
+
+        .new-text {
+            font-weight: 400;
+            color: var(--Grayish-blue);
+        }
+
+        /* TOP NEW STYLE */
+        .top-news {
+            grid-area: top-new;
+            display: flex;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .top-new {
+            display: flex;
+            width: 33.33%;
+            align-items: center;
+            margin: 0;
+        }
+
+        .top-image {
+            height: 100px;
+            width: 40%;
+            object-fit: cover;
+        }
+
+        .top-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-left: 20px;
+            gap: 6px;
+        }
+
+        .top-number {
+            color: var(--Grayish-blue);
+            font-weight: 700;
+            font-size: 30px;
+        }
+
+        .top-title {
+            color: var(--Very-dark-blue);
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .top-title:hover {
+            color: var(--Soft-red);
+        }
+
+        .top-text {
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--Dark-grayish-blue);
+        }
+
+        /* MOBILE MENU STYLES */
+        .mobile-menu {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 65%;
+            height: 100%;
+            background: var(--Off-white);
+            padding: 2rem 1.5rem;
+            animation-duration: 0.5s;
+            animation-name: slideIn;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .mobile-menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4rem;
+        }
+
+        .mobile-menu-container ul {
+            align-self: flex-start;
+        }
+
+        .mobile-menu-container ul li {
+            font-weight: 400;
+            font-size: 17px;
+            color: var(--Dark-grayish-blue);
+            margin: 25px 0;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu {
+                display: block;
+            }
+
+            .container,
+            .main-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .main-title,
+            .main-info {
+                width: 100%;
+                gap: 30px
+            }
+
+            .btn {
+                padding: 14px 20px;
+                margin-bottom: 30px;
+            }
+
+            .top-news {
+                flex-direction: column;
+                margin-top: 30px;
+            }
+
+            .top-image {
+                height: 110px;
+            }
+
+            .top-new {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 801px) {
+            .backdrop,
+            .mobile-menu {
+                display: none;
+            }
+        }
+    </style>
+
+    <title>Sesgo Informativo</title>
+
+</head>
+
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Barra de navegación -->
+        <nav>
+            <img class="logo" src="logo.svg" alt="logo">
+            <ul class="nav-links">
+                <li>Inicio</li>
+                <li>Nuevas</li>
+                <li>Populares</li>
+                <li>Tendencias</li>
+                <li>Categorías</li>
+            </ul>
+            <img class="menu" src="icon-menu.svg" alt="menu">
+        </nav>
+
+        <!-- Contenido principal -->
+        <main>
+            <picture>
+                <source media="(max-width:800px)" srcset="image-web-3-mobile.jpg">
+                <img class="image-web" src="image-web-3-desktop.jpg">
+            </picture>
+            <div class="main-container">
+                <!-- Título principal y contenido destacado -->
+                <h1 class="main-title">Claudia Sheimbaum y Rocío arrancan el 20 de noviembre</h1>
+                <div class="main-info">
+                    <p class="main-text">Nos Xalapa, Ver., 11 de noviembre de 2023.- Juntos y unidos el equipo que
+                        encabeza la continuidad de la Cuarta Transformación levantaron la mano a la Coordinadora de
+                        los Comités de la Defensa de la 4T en Veracruz, Rocío Nahle García quien anunció que el próximo
+                        20 de noviembre, su homóloga a nivel nacional, Claudia Sheinbaum Pardo, arribará a Boca del Rio
+                        para iniciar con la precampaña que marca la ley</p>
+                    <button class="btn"
+                        onclick="window.location.href='https://golpepolitico.com/2023/11/11/claudia-sheimbaum-y-rocio-nahle-arrancaran-el-20-de-noviembre-en-veracruz/'">Leer
+                        más</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sección de noticias -->
+        <aside class="news">
+            <h2>Nuevas</h2>
+            <!-- Noticias recientes -->
+            <div class="new">
+                <h3 class="new-title">Hidrógeno VS Autos Eléctricos</h3>
+                <p class="new-text">¿Alguna vez los autos impulsados por hidrógeno alcanzarán a los autos
+                    eléctricos?</p>
+            </div>
+            <div class="new">
+                <h3 class="new-title">Los Inconvenientes de la Artillería de IA</h3>
+                <p class="new-text">¿Cuáles son los posibles efectos adversos de la generación de imágenes de IA a
+                    pedido?</p>
+            </div>
+            <div class="new">
+                <h3 class="new-title">¿Se Está Secando la Financiación de VC?</h3>
+                <p class="new-text">La financiación privada de las firmas de VC ha disminuido un 50% interanual.
+                    Analizamos lo que eso significa.</p>
+            </div>
+        </aside>
+
+        <!-- Noticias destacadas -->
+        <aside class="top-news">
+            <div class="top-new">
+                <img class="top-image" src="image-retro-pcs.jpg" alt="">
+                <div class="top-info">
+                    <h2 class="top-number">01</h2>
+                    <h3 class="top-title">Reviviendo las PCs Retro</h3>
+                    <p class="top-text">¿Qué sucede cuando las viejas PCs reciben mejoras modernas?</p>
+                </div>
+            </div>
+            <div class="top-new">
+                <img class="top-image" src="image-top-laptops.jpg" alt="">
+                <div class="top-info">
+                    <h2 class="top-number">02</h2>
+                    <h3 class="top-title">Top 10 Laptops de 2022</h3>
+                    <p class="top-text">Nuestras mejores selecciones para diversas necesidades y presupuestos.</p>
+                </div>
+            </div>
+            <div class="top-new">
+                <img class="top-image" src="image-gaming-growth.jpg" alt="">
+                <div class="top-info">
+                    <h2 class="top-number">03</h2>
+                    <h3 class="top-title">El Crecimiento de los Videojuegos</h3>
+                    <p class="top-text">Cómo la pandemia ha generado nuevas oportunidades.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Elementos adicionales -->
+    <div class="backdrop inactive"></div>
+    <div class="mobile-menu inactive">
+        <div class="mobile-menu-container">
+            <figure>
+                <img class="close" src="icon-menu-close.svg" alt="">
+            </figure>
+            <ul>
+                <li>Inicio</li>
+                <li>Nuevas</li>
+                <li>Populares</li>
+                <li>Tendencias</li>
+                <li>Categorías</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Archivo de scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+<!-- Mirrored from linen220.github.io/pagina-noticias/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 12 Nov 2023 04:

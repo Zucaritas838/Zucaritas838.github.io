@@ -1,0 +1,40 @@
+:root {
+    --Soft-orange: hsl(35, 77%, 62%);
+    --Soft-red: hsl(5, 85%, 63%);
+    --Off-white: hsl(36, 100%, 99%);
+    --Grayish-blue: hsl(233, 8%, 79%);
+    --Dark-grayish-blue: hsl(236, 13%, 42%);
+    --Very-dark-blue: hsl(240, 100%, 5%);
+}
+
+/* ... (Previous CSS rules) ... */
+
+/* Disable Right-Click and Prevent Text Selection */
+body {
+    user-select: none;
+}
+
+img {
+    pointer-events: none;
+}
+
+/* Add the following script at the end of your body tag in HTML */
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
+/* Watermark Images */
+.top-image {
+    position: relative;
+}
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0.5; /* Adjust the opacity as needed */
+}
+
+/* ... (Remaining CSS rules) ... */
